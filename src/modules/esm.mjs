@@ -1,25 +1,24 @@
-import { sep, dirname } from 'node:path';
+import { sep, dirname, join } from 'node:path';
 import { release, version } from 'os';
-import { createServer as createServerHttp  } from 'http';
-
-import './files/c.js';
-import aFile from './files/a.json' assert { type: 'json' };
-import bFile from './files/b.json' assert { type: 'json' };
-
+import { createServer as createServerHttp } from 'http';
+import { readFile } from 'node:fs/promises';
 import url from 'url';
+import './files/c.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename); 
-console.log(__dirname)
+
+const aFile = join(__dirname, 'files', 'a.json');
+const bFile = join(__dirname, 'files', 'b.json');
 
 const random = Math.random();
 
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = aFile;
+    unknownObject = JSON.parse(await readFile(aFile, { encoding: 'utf8' }));
 } else {
-    unknownObject = bFile;
+    unknownObject = JSON.parse(await readFile(bFile, { encoding: 'utf8' }));
 }
 
 console.log(`Release ${release()}`);
