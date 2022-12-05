@@ -5,8 +5,7 @@ const transform = async () => {
   const reverseStream = new Transform({
     transform(data, encoding, callback) {
       const reversedData = data.toString().split("").reverse().join("") + "\n";
-      callback();
-      this.push(reversedData);
+      callback(null, reversedData);
     },
   });
 
