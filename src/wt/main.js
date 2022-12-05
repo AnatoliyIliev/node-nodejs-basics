@@ -6,7 +6,6 @@ import url from 'url';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
 const performCalculations = async () => {
     const workerFile = join(__dirname, 'worker.js');
     const systemCpuCores = cpus();
